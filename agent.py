@@ -44,6 +44,6 @@ agent_executor = AgentExecutor(
 
 agent_executor.invoke(
     {
-        "input": "Create a test mail with text 'An AI Agent created and sent this email, hey Sydney' and send it to the email 'sklepper@hamilton.edu'."
+        "input": "Create a test mail with text 'Insert text here' and send it to the email 'email@gmail.com'."
     }
 )
