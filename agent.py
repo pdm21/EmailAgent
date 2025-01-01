@@ -1,10 +1,16 @@
 from langchain_community.agent_toolkits import GmailToolkit 
-toolkit = GmailToolkit()
-
+from langchain_community.tools.tavily_search import TavilySearchResults
+from dotenv import load_dotenv
+load_dotenv()
+from langchain_openai import ChatOpenAI
+from langchain import hub
+from langchain.agents import AgentExecutor, create_openai_functions_agent
 from langchain_community.tools.gmail.utils import (
     build_resource_service,
     get_gmail_credentials,
 )
+
+toolkit = GmailToolkit()
 
 credentials = get_gmail_credentials(
     token_file="token.json",
@@ -16,19 +22,7 @@ toolkit = GmailToolkit(api_resource=api_resource)
 
 tools = toolkit.get_tools()
 
-from langchain_community.tools.tavily_search import TavilySearchResults
-# from dotenv import load_dotenv
-# import os
-# dotenv_path = ".env"
-# load_dotenv(dotenv_path)
-from dotenv import load_dotenv
-load_dotenv()
-
-from langchain_openai import ChatOpenAI
 llm = ChatOpenAI(temperature=0, streaming=True)
-
-from langchain import hub
-from langchain.agents import AgentExecutor, create_openai_functions_agent
 
 instructions = """You are an assistant."""
 base_prompt = hub.pull("langchain-ai/openai-functions-template")
