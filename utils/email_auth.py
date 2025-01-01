@@ -9,7 +9,6 @@ SCOPES = [
     'https://www.googleapis.com/auth/gmail.settings.basic'
 ]
 
-
 def authenticate_gmail():
     """Authenticate with Gmail API and return a service object."""
     creds = None
@@ -43,8 +42,9 @@ def list_gmail_labels(service):
 
 if __name__ == '__main__':
     # Authenticate and get the Gmail API service
-    service = authenticate_gmail()
+    try:
+        service = authenticate_gmail()
+    except Exception as e:
+        print("There was an error in the Gmail authentication process. More info: ", e)
     
-    # Test the connection by listing Gmail labels
-    list_gmail_labels(service)
 

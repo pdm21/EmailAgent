@@ -9,6 +9,8 @@ from langchain_community.tools.gmail.utils import (
     build_resource_service,
     get_gmail_credentials,
 )
+from utils.email_auth import authenticate_gmail
+
 
 toolkit = GmailToolkit()
 
@@ -36,8 +38,17 @@ agent_executor = AgentExecutor(
     verbose=True,
 )
 
-agent_executor.invoke(
-    {
-        "input": "Create a test mail with text 'Insert text here' and send it to the email 'email@gmail.com'."
-    }
-)
+def main():
+    # Authenticate and get the Gmail API service
+    try:
+        authenticate_gmail()
+        agent_executor.invoke(
+            {
+                "input": "Create a test mail with text 'testing...' and send it to the email 'pandsmar@gmail.com'."
+            }
+        )
+    except Exception as e:
+        print("There was an error in the Gmail authentication process. More info: ", e)
+
+if __name__ == '__main__':
+    main()
